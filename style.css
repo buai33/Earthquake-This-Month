@@ -106,7 +106,7 @@ input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
 .depth-btn.is-active { color: #ffffff; font-weight: 800; }
 .depth-btn[data-depth="all"].is-active         { background: var(--ink); border-color: var(--ink); }
 .depth-btn[data-depth="shallow"].is-active      { background: var(--shallow); border-color: var(--shallow); }
-.depth-btn[data-depth="intermediate"].is-active { background: var(--intermed); border-color: var(--intermed); }
+.depth-btn[data-depth="intermediate"].is-active { background: var(--intermediate); border-color: var(--intermediate); }
 .depth-btn[data-depth="deep"].is-active         { background: var(--deep); border-color: var(--deep); }
 
 select {
@@ -202,3 +202,36 @@ select {
   #side { width: 100%; max-height: 44%; border-right: none; border-bottom: 1px solid var(--line); }
   #scene-progress { display: none; }
 }
+
+/* detail */
+#detail {
+  margin-top: 20px; background: #ffffff;
+  border: 1px solid var(--accent-2); border-radius: 10px; padding: 14px;
+}
+.detail-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.detail-head h3 { margin: 0; font-size: 13px; color: var(--accent-2); }
+#detail-close { background: none; border: none; color: var(--ink-faint); cursor: pointer; font-size: 14px; }
+#detail-close:hover { color: var(--ink); }
+#detail-body { font-size: 13px; line-height: 1.7; color: var(--ink-dim); }
+#detail-body .big { font-size: 17px; font-weight: 800; color: var(--ink); display: block; margin-bottom: 4px; }
+#detail-body .row b { color: var(--ink); }
+
+/* region stats */
+#region-stats {
+  margin-top: 20px; background: var(--panel-2);
+  border: 1px solid var(--line); border-radius: 10px; padding: 14px;
+}
+#region-stats h3 { margin: 0 0 12px; font-size: 14px; color: var(--accent); }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { background: #ffffff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+.stat-num { font-size: 21px; font-weight: 800; color: var(--ink); }
+.stat-lab { font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+
+/*  d3-annotation */
+.annotation-group .annotation path.connector { stroke: var(--ink-dim); stroke-width: 1.5; }
+.annotation-group .annotation path.connector-end { fill: var(--ink-dim); stroke: var(--ink-dim); }
+.annotation-group .annotation .annotation-note-bg { fill: rgba(255,255,255,.92); }
+.annotation-group .annotation-note-title { fill: var(--accent); font-weight: 800; font-size: 12.5px; }
+.annotation-group .annotation-note-label { fill: var(--ink); font-size: 11.5px; }
+.annotation-group .annotation.callout-circle .connector { stroke-dasharray: none; }
+.annotation-group circle.annotation-subject, .annotation-group .subject { stroke: var(--accent); }

@@ -15,12 +15,12 @@
                     <span class="brand-mark">◉</span>
                     <div>
                         <h1>Where is the Earthquake</h1>
-                        <p class="subtitle">A tour of magnitude 4.5+ earthquakes over the past 30 days
+                        <p class="subtitle">Follow the story from the whole global down to a single active region - a tour of magnitude 4.5+ earthquakes over the past 30 days.
                             <span id="data-source-note"></span>
                         </p>
                     </div>
                 </div>
-                <div id="scene-progress" aria-lable="scene progress"></div>
+                <div id="scene-progress" aria-label="scene progress"></div>
             </header>
 
             <!-- ======== Main ======== -->
@@ -31,7 +31,7 @@
                         <div class="scene-eyebrow">
                             <span id="scene-num">1</span>&nbsp;/&nbsp;<span id="scene-total">3</span>&middot;<span id="scene-kicker">Global distribution</span>
                         </div>
-                        <h2 id="scene-title">Earthquakes trace the edges of the plates</h2>
+                        <h2 id="scene-title">Where earthquakes happen, and how strong they are?</h2>
                         <p id="scene-narrative">Every dot is one earthquake of magnitude 4.5 or greater recorded in the last month.</p>
                     </div>
 
@@ -62,12 +62,12 @@
                             <select id="region-select">
                                 <option value="global">Whole world</option>
                                 <option value="jpphid">Japan/ Philippines/ Indonesia</option>
-                                 <option value="nzfj">New Zealand/ Fiji</option>
+                                <option value="nzfj">New Zealand/ Fiji</option>
                                 <option value="clpe">Chile/ Peru</option>
                                 <option value="mx">Mexico</option>
                                 <option value="al">Alaska/ Aleutian Islands</option>
                             </select>
-                            <div clas="contrl-hint">Or click on a hostpot box on the map to drill in.</div>
+                            <div class="control-hint">Or click on a hostpot box on the map to drill in.</div>
                         </div>
 
                         <!-- sort -->
@@ -82,10 +82,10 @@
 
                         <!-- top 10 earthquakes-->
                         <div class="control-group" data-control="top">
-                            <lable class="checkbox">
+                            <label class="checkbox">
                                 <input type="checkbox" id="top-10-checkbox" />
                                 <span>Spotlight the 10 largest earthquakes.</span>
-                            </lable>
+                            </label>
                         </div>
 
                         <!-- reset -->
@@ -122,7 +122,7 @@
                     <div id="detail" hidden>
                         <div class="detail-head">
                             <h3>Selected earthquake</h3>
-                            <bottun id="detail-close" aria-label="clear selection">x</bottun>
+                            <button id="detail-close" type="button" aria-label="clear selection">×</button>
                         </div>
                         <div id="detail-body"></div>
                     </div>
@@ -133,12 +133,12 @@
                 <!-- ======== Right: map ======== -->
                 <section id="stage">
                     <svg id="map" role="img" aria-label="World map of recent earthquakes"></svg>
-                    <div id="legent"></div>
+                    <div id="legend"></div>
                     <div id="tooltip" class="tooltip" hidden></div>
                     <div id="loading">Loading live earthquake feed...</div>
                 </section>
 
-                
+
             </div>
             
             <!-- ======== Footer ======== -->
@@ -151,11 +151,13 @@
         </div>
 
 
-        <script src="js/main.js"></script>
+
         <!-- Libraries: D3, D3-annotation, topoJSON Client -->
         <script src="js/lib/d3.min.js"></script>
         <script src="js/lib/d3-annotation.min.js"></script>
         <script src="js/lib/topojson-client.min.js"></script>
+
+        <script src="js/main.js"></script>
 
 
 
