@@ -146,9 +146,9 @@ const SCENES = [
         narrative() {
             return `<p>Please choose a region or click a hotspot box to examine its earthquakes more closely.</p>
 
-            <p><The region pannel summarizes the total number of earthquakes, the largest magnitude, average depth and share of shallow events./p>
+            <p>The region panel summarizes the total number of earthquakes, the largest magnitude, average depth, and share of shallow events.</p>
                 
-            <p> Use the controls to filter by the magnitude, depth, region, and sorting controls. Click any point to view its details.</p>`;
+            <p>Use the controls to filter by magnitude or depth, sort the points, highlight the ten largest earthquakes, and view details for any selected point.</p>`;
         },
     },
 ];
@@ -633,9 +633,10 @@ function annoAt(lon, lat, dx, dy, title, label) {
     // Annotation at the latitude & longitude.
     const p = projection([lon, lat]);
     const [x, y] = applyK(p);
+    const offset = keepAnnotationInside(x, y, dx, dy);
     return {
         note: { title, label, wrap: 180, align: "dynamic", padding: 5 },
-        x, y, dx, dy,
+        x, y, dx: offset.dx, dy: offset.dy,
         subject: { radius: 20, radiusPadding: 2 },
         className: "callout-circle",
     };
@@ -643,9 +644,10 @@ function annoAt(lon, lat, dx, dy, title, label) {
 
 function annoAtQuake(d, dx, dy, title, label) {
     const [x, y] = applyK([projX(d), projY(d)]);
+    const offset = keepAnnotationInside(x, y, dx, dy);
     return {
         note: { title, label, wrap: 180, align: "dynamic", padding: 5 },
-        x, y, dx, dy,
+        x, y, dx: offset.dx, dy: offset.dy,
         subject: { radius: Math.max(12, rScale(d.mag) + 6), radiusPadding: 2 },
         className: "callout-circle",
     };
@@ -655,6 +657,19 @@ function applyK(point) {
     if (!point) return [0, 0];
     const transform = svg && svg.node() ? d3.zoomTransform(svg.node()) : d3.zoomIdentity;
     return [transform.applyX(point[0]), transform.applyY(point[1])];
+}
+
+function keepAnnotationInside(x, y, dx, dy) {
+    const margin = 12;
+    const noteWidth = 210;
+    const noteHeight = 78;
+    const minX = margin + noteWidth / 2;
+    const maxX = Math.max(minX, width - margin - noteWidth / 2);
+    const minY = margin + noteHeight / 2;
+    const maxY = Math.max(minY, height - margin - noteHeight / 2);
+    const targetX = Math.max(minX, Math.min(maxX, x + dx));
+    const targetY = Math.max(minY, Math.min(maxY, y + dy));
+    return { dx: targetX - x, dy: targetY - y };
 }
 
 
