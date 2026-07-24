@@ -416,7 +416,7 @@ function render() {
         .each(function (d) { d.__active = isActive(d); })
         .attr("cx", projX)
         .attr("cy", projY)
-        .attr("r", d => baseRadius(d, scene) / currentK)
+        .attr("r", d => displayRadius(d, scene, topIds) / currentK)
         .attr("fill", d => fillFor(d, scene))
         .attr("stroke", d => d.id === state.selectedEarthquakeId ? "#1b2430" : "none")
         .attr("stroke-width", d => (d.id === state.selectedEarthquakeId ? 2.4 : 0) / currentK)
@@ -444,18 +444,22 @@ function render() {
 }
 
 // Filtering helpers
-function isActive(quake) {
+function isActive(quake, options = {}) {
+    const ignoreDepth = options.ignoreDepth === true;
     if (quake.mag < state.minMagnitude) return false;
-    if (state.selectedDepthCategory !== "all" && quake.depthCat !== state.selectedDepthCategory) return false;
+    if (!ignoreDepth && state.selectedDepthCategory !== "all" && quake.depthCat !== state.selectedDepthCategory) return false;
     if (state.selectedRegion !== "global" && !REGIONS[state.selectedRegion].test(quake.lon, quake.lat)) return false;
     return true;
 }
 
 function computeActive() {
     const active = QUAKES.filter(isActive);
+    const spotlightPool = state.selectedDepthCategory === "all"
+        ? QUAKES.filter(quake => isActive(quake, { ignoreDepth: true }))
+        : active;
     return {
         activeList: active,
-        topIds: new Set(active.slice().sort((a, b) => b.mag - a.mag).slice(0, 10).map(d => d.id)),
+        topIds: new Set(spotlightPool.slice().sort((a, b) => b.mag - a.mag).slice(0, 10).map(d => d.id)),
     };
 }
 
@@ -704,14 +708,20 @@ function onZoom(event) {
 
     // rescale quakes so they keep a constant screen size
     const scene = SCENES[state.scene - 1];
+    const topIds = computeActive().topIds;
     gQuakes.selectAll("circle.quake")
-        .attr("r", d => baseRadius(d, scene) / currentK)
+        .attr("r", d => displayRadius(d, scene, topIds) / currentK)
         .attr("stroke-width", d => (d.id === state.selectedEarthquakeId ? 2.4 : 0) / currentK);
     render();
 }
 
 function baseRadius(quake, scene) {
     return scene.uniformSize ? 3.1 : rScale(quake.mag);
+}
+
+function displayRadius(quake, scene, topIds) {
+    const radius = baseRadius(quake, scene);
+    return state.showTopEarthquakes && topIds.has(quake.id) ? radius * 1.45 : radius;
 }
 
 function opacityFor(quake, scene) {
