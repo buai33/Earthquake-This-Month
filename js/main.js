@@ -83,7 +83,7 @@ const SCENES = [
     {
         key: "overview",
         kicker: "Location and strength",
-        title: "Where earthquakes happen, and how strong they are",
+        title: "Where earthquakes happen and how strong they are",
         uniformSize: false,
         colorByDepth: false,
         onEnter() {
